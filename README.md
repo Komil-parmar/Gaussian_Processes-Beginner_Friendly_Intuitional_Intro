@@ -86,7 +86,7 @@ This is where the **core assumption of a Gaussian Process (GP)** comes in which 
 
 ---
 
-### 🔍 What Does GP Assume Instead?
+### 2.1 🔍 What Does GP Assume Instead?
 
 Rather than assuming `X` and `y` are individually Gaussian, we assume that:
 
@@ -101,7 +101,7 @@ Importantly, we **don't need to know** the exact form of the function $f$—Gaus
 
 ---
 
-### 📊 What Are We Trying to Estimate?
+### 2.2 📊 What Are We Trying to Estimate?
 
 The key quantity we want to compute is the **conditional distribution**:
 
@@ -130,7 +130,7 @@ This formulation allows Gaussian Processes to:
 
 ## 3. 📊 Understanding Joint Multivariate Normal Distribution <a name="joint-distribution"></a>
 
-### 🔍 What Does *Jointly Multivariate Normally Distributed* Mean?
+### 3.1 🔍 What Does *Jointly Multivariate Normally Distributed* Mean?
 
 When we say that a set of values is *jointly multivariate normally distributed*, we mean:
 
@@ -149,7 +149,7 @@ a **multivariate normal distribution over functions** gives us the probability o
 
 ---
 
-### 🤔 Still Wondering Why It's $n$-Dimensional?
+### 3.2 🤔 Still Wondering Why It's $n$-Dimensional?
 
 If you select $n$ data points $x_1, x_2, \dots, x_n$, then the multivariate normal distribution becomes $n$-dimensional.
 
@@ -174,7 +174,7 @@ a **multivariate normal distribution over functions** gives us the probability o
 
 ---
 
-### 📈 Visualizing It
+### 3.3 📈 Visualizing It
 
 Suppose we select 3 input points: $x_1, x_2, x_3$.
 Then a single sample from the GP prior gives us one function $f$, which evaluates to:
@@ -203,22 +203,6 @@ $$
 Each such vector corresponds to one **possible function**, and the GP defines a **probability distribution over all such functions**.
 
 > This is how Gaussian Processes enable learning from data by modeling an infinite space of functions—but using only finite data points and their joint distributions.
-
----
-
-## Understanding Joint Multivariate Normal Distribution {#joint-distribution}
-
-### What does jointly (together) multivariate normally distributed mean?
-
-It means that these data points can be sampled from the same multivariate (or simply multi-dimensional) normal distribution. 
-
-Also, if there are n transformed data points that we are considering, then this multivariate normal distribution that we are talking about will be n-dimensional. 
-
-**Important Note:** $n$ is not the dimension of the values/vectors ($d$) in $X$. Hence, this multivariate normal distribution is not a distribution over our samples but a distribution over the functions that are eligible for the setup explained before. And just like normally a normal distribution tells us how likely a value is, this multivariate normal distribution is going to tell us how likely each eligible function is.
-
-### If you are still not convinced why is it n-dimensional?
-
-If we select $n$ data points then the multivariate normal distribution is going to be $n$ dimensional. This is because for every possible sample that we extract from it, that as we know is a function, is going to generate a $f(?)$ for each of the data points that we considered.
 
 ---
 
