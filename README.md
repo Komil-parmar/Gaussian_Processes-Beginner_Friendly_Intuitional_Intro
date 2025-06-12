@@ -26,7 +26,7 @@ If you prefer email, mail me at one of the following:
 
 ---
 
-## 🧠 Introduction: How Does Knowing the Random Variable Help? {#introduction}
+## 1. 🧠 Introduction: How Does Knowing the Random Variable Help? {#introduction}
 
 ### 📌 Scenario 1: Classification with Known Distribution
 
@@ -78,7 +78,7 @@ What’s left?
 
 ---
 
-## 📐 The Gaussian Process Assumption <a name="assumption"></a>
+## 2. 📐 The Gaussian Process Assumption <a name="assumption"></a>
 
 In most real-world scenarios, it's **highly unlikely** that both the input data `X` and the corresponding target values `y` are **individually Gaussian distributed**.
 
@@ -125,6 +125,84 @@ This formulation allows Gaussian Processes to:
 * Model complex, nonlinear functions (since the unknown imaginary function can be literally any function),
 * Capture **correlations** between outputs (since we are taking into account all the training points at the same time),
 * And make **joint predictions** with associated uncertainty (since the output for new inputs is drawn from a conditional multivariate normal distribution).
+
+---
+
+## 3. 📊 Understanding Joint Multivariate Normal Distribution <a name="joint-distribution"></a>
+
+### 🔍 What Does *Jointly Multivariate Normally Distributed* Mean?
+
+When we say that a set of values is *jointly multivariate normally distributed*, we mean:
+
+> All the values can be thought of as being sampled **together** from a single multivariate (i.e., multi-dimensional) **normal distribution**.
+
+If you're working with $n$ transformed data points, then:
+
+* You're sampling from an **$n$-dimensional** multivariate normal distribution.
+
+> 🧠 **Important Note:**
+> $n$ refers to the **number of data points**, not the **dimensionality $d$** of the individual feature vectors in $X$.
+> So, this is **not** a distribution over your feature space—it’s a distribution over the **function values** associated with the data points.
+
+Just like a standard normal distribution gives the probability of a specific value,
+a **multivariate normal distribution over functions** gives us the probability of a particular function being the true one that explains the data.
+
+---
+
+### 🤔 Still Wondering Why It's $n$-Dimensional?
+
+If you select $n$ data points $x_1, x_2, \dots, x_n$, then the multivariate normal distribution becomes $n$-dimensional.
+
+Why?
+
+Because:
+
+* Each sample drawn from this distribution represents a **possible function** $f$,
+* And this function will produce values $f(x_1), f(x_2), \dots, f(x_n)$,
+* So each sample corresponds to an **$n$-dimensional vector** of function values.
+
+Hence, you're modeling a distribution **over functions**, by treating their values (outputs) at selected inputs as jointly normal.
+
+* You're sampling from an **$n$-dimensional** multivariate normal distribution.
+
+> 🧠 **Important Note:**
+> $n$ refers to the **number of data points**, not the **dimensionality $d$** of the individual feature vectors in $X$.
+> So, this is **not** a distribution over your feature space—it’s a distribution over the **function values** associated with the data points.
+
+Just like a standard normal distribution gives the probability of a specific value,
+a **multivariate normal distribution over functions** gives us the probability of a particular function being the true one that explains the data, i.e. makes our original data normally distributed after applying the function as we assumed earlier.
+
+---
+
+### 📈 Visualizing It
+
+Suppose we select 3 input points: $x_1, x_2, x_3$.
+Then a single sample from the GP prior gives us one function $f$, which evaluates to:
+
+$$
+\begin{bmatrix}
+f(x_1) \\
+f(x_2) \\
+f(x_3)
+\end{bmatrix}
+\sim \mathcal{N}
+\left(
+\begin{bmatrix}
+\mu_1 \\
+\mu_2 \\
+\mu_3
+\end{bmatrix},
+\begin{bmatrix}
+\sigma_{11} & \sigma_{12} & \sigma_{13} \\
+\sigma_{21} & \sigma_{22} & \sigma_{23} \\
+\sigma_{31} & \sigma_{32} & \sigma_{33}
+\end{bmatrix}
+\right)
+$$
+
+Each such vector corresponds to one **possible function**, and the GP defines a **probability distribution over all such functions**.
+
+> This is how Gaussian Processes enable learning from data by modeling an infinite space of functions—but using only finite data points and their joint distributions.
 
 ---
 
