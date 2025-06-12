@@ -157,12 +157,13 @@ Imagine you're asking three friends what the weather is like. Two friends are st
 
 Let's create a concrete example with a 3×3 kernel matrix where two training points are highly correlated:
 
-**Kernel Matrix K:**
-$$K = \begin{bmatrix}
+$$
+K = \begin{bmatrix}
 1.0 & 0.9 & 0.1 \\
 0.9 & 1.0 & 0.1 \\
 0.1 & 0.1 & 1.0
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 Here:
 - Points 1 and 2 are highly similar (kernel value = 0.9)
@@ -170,11 +171,14 @@ Here:
 - Diagonal entries are 1.0 (each point is identical to itself)
 
 **Inverse Kernel Matrix K⁻¹:**
-$$K^{-1} = \begin{bmatrix}
+
+$$
+K^{-1} = \begin{bmatrix}
 5.26 & -4.74 & 0.53 \\
 -4.74 & 5.26 & 0.53 \\
 0.53 & 0.53 & 1.05
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 **What's Happening:**
 1. **Original Correlation**: Points 1 and 2 had high similarity (0.9), meaning they provide redundant information
