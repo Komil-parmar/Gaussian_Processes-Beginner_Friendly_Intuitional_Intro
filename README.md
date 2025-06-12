@@ -206,26 +206,53 @@ Each such vector corresponds to one **possible function**, and the GP defines a 
 
 ---
 
-## Kernel Functions {#kernel-functions}
+## 4. 🧮 Kernel Functions <a name="kernel-functions"></a>
 
-### What is a kernel function?
+### 4.1 🔍 What Is a Kernel Function?
 
-A kernel is a function that takes in two points as input and gives a big value if the two points are close to each other and a small value if the two points are far from each other. So, in a way it is kind of the inverse of some distance metric like L1 or L2.
+A **kernel function** is a mathematical tool that takes **two input points**—say $x$ and $x'$—and returns a value that reflects how **similar** they are:
 
-The kernel measures how similar $x$ and $x'$ are, and the Gaussian Process uses this to make sure that $f(x)$ and $f(x')$ are just as similar (or different).
+> * If $x$ and $x'$ are **close together**, the kernel outputs a **large value**.
+> * If they are **far apart**, it outputs a **small value**.
 
-So, if two points are close together and the kernel says they're very similar, the GP expects their function values to be close too. If they're far apart, the kernel says they're less similar, and the function values can be more different. This helps to filter or make a selection of which function should be used.
+In this way, a kernel function behaves somewhat like the **inverse** of a distance metric (like L1 or L2 distance), but instead of measuring how far points are, it measures **how much they "belong together."**
 
-### Common Kernel Functions
+---
 
-**Radial Basis Function (RBF) / Gaussian Kernel:**
-$$k(x, x') = \sigma^2 \exp\left(-\frac{\|x - x'\|^2}{2l^2}\right)$$
+### 4.2 📈 How Does the Kernel Influence the GP?
 
-**Linear Kernel:**
-$$k(x, x') = \sigma^2 (x \cdot x')$$
+The **kernel determines the relationship between inputs and their outputs** in the Gaussian Process.
 
-**Polynomial Kernel:**
-$$k(x, x') = (x \cdot x' + c)^d$$
+* If the kernel says two points $x$ and $x'$ are similar,
+  → the GP assumes their function values $f(x)$ and $f(x')$ should also be **close**.
+
+* If the kernel says they’re dissimilar,
+  → the GP allows the function values to be **different**.
+
+This helps the GP decide which functions are likely to fit the data, essentially **filtering out unrealistic functions** and favoring those that respect the local structure of the input space.
+
+---
+
+### 4.3 🧪 Common Kernel Functions
+
+Here are some widely used kernels:
+
+- **Radial Basis Function (RBF) / Gaussian Kernel**
+  This is the most popular kernel for smooth functions:
+
+  $$k(x, x') = \sigma^2 \exp\left(-\frac{\|x - x'\|^2}{2l^2}\right)$$
+
+* **Linear Kernel**
+  Suitable for modeling linear relationships:
+
+  $$k(x, x') = \sigma^2 (x \cdot x')$$
+
+* **Polynomial Kernel**
+  Adds flexibility by introducing non-linear interactions:
+
+  $$k(x, x') = (x \cdot x' + c)^d$$
+
+Each kernel introduces different assumptions about the underlying function (e.g., smoothness, linearity, periodicity). The choice of kernel is critical—it defines the *shape* of the functions your GP believes in. Hence you will notice that since we are using RBF (Gaussian Kernel) in this intro, the graphs that follow will resemble gaussian shapes. 
 
 ---
 
