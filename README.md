@@ -287,10 +287,6 @@ Each kernel introduces different assumptions about the underlying function (e.g.
 
 ---
 
-Here’s a well-structured and clearly formatted version of your **Kernel Matrix** section, styled to match the previous parts in tone and layout:
-
----
-
 ## 5. 🧮 Kernel Matrix <a name="kernel-matrix"></a>
 
 ### 5.1 📐 What Is a Kernel Matrix?
@@ -374,10 +370,6 @@ Gaussian Processes also add a **"noise variance"** term to the kernel.
 This accounts for random noise in the data, preventing the model from **overfitting every point** exactly.
 
 You’ll explore this more in the upcoming **Parameter Estimation** section.
-
----
-
-Here's a cleaned-up and professionally formatted version of your **Understanding $K^{-1}$** section, consistent with the tone and style of earlier sections:
 
 ---
 
@@ -489,18 +481,6 @@ This avoids overfitting and allows inversion even in near-singular conditions.
 
 > 📊 On the **left**, the GP fits the training points **too perfectly** (high confidence, no noise)
 > 📉 On the **right**, the GP is **smoother**, accepting that there's **some uncertainty** in the observations.
-
----
-
-Here’s the reformatted version of your **Parameter Estimation** section to match the polished style of earlier parts:
-
----
-
-Here’s your reformatted and polished version of the **Parameter Estimation: Mean and Covariance** section, with consistent styling and LaTeX changed to GitHub-compatible math:
-
----
-
-Here’s your exact content, rewritten **as-is** with all math equations correctly formatted for **GitHub README markdown** (i.e., using backticks for inline math and triple backticks + `math` for block equations). This ensures proper rendering using plugins like [MathJax for GitHub](https://github.com/orsharir/github-mathjax) or within tools that support markdown + LaTeX.
 
 ---
 
@@ -727,10 +707,6 @@ The kernel parameters `(σ², l, σ_noise²)` are typically learned by **maximiz
 
 3. **Scalability**
    Not ideal for **very large datasets** unless approximations (e.g., sparse GPs) are used
-
----
-
-Here's your **Conclusion** section rewritten in the same clean, educational, and GitHub-compatible style:
 
 ---
 
