@@ -14,7 +14,7 @@ If you prefer email, mail me at one of the following:
 - komil.parmar@op.iitg.ac.in
 
 ## Table of Contents
-1. [Introduction: Why Random Variables Matter](#introduction)
+1. [Introduction: How Does Knowing the Random Variable Help?](#introduction)
 2. [The Gaussian Process Assumption](#assumption)
 3. [Understanding Joint Multivariate Normal Distribution](#joint-distribution)
 4. [Kernel Functions](#kernel-functions)
@@ -26,36 +26,105 @@ If you prefer email, mail me at one of the following:
 
 ---
 
-## Introduction: Why Random Variables Matter {#introduction}
+## 🧠 Introduction: How Does Knowing the Random Variable Help? {#introduction}
 
-How does knowing the random variable help?
+### 📌 Scenario 1: Classification with Known Distribution
 
--> Scenario 1:
-Imagine that there are two classes Class A and Class B and I have the data of the hours of study and the results of the students belonging to each class. Let's say I give you the data belonging to Class A and a new data point of a student belonging to an unknown class. You are supposed to find if the given student belongs to Class A or not. 
-You will not be able to answer this directly without using any learning algorithm. 
+Imagine two classes: **Class A** and **Class B**. You have data showing the *hours of study* and *results* for students from each class.
 
-However if I assure you that the data follows a multivariate normal distribution and I give you the parameters of this distribution then you can easily estimate the probability of the new data point belonging to this normal distribution and hence the probability that it belongs to class A.
+Now, suppose you're given:
 
--> Scenario 2:
-Now let's say that you are supposed to find the result given the hours of study for the new student given that the new student is from class A. To do this let's say that the hours of study and the result are individually normally distributed.
+* A dataset belonging to **Class A**, and
+* A new data point (student) whose class is unknown.
 
-**Key Insight:** Proof says that if one normal distribution is conditioned on another normal distribution then the resulting distribution is still a normal distribution.
+You're asked: **Does this new student belong to Class A?**
 
-All that is left to do is to find the parameters of this conditioned normal distribution that are the mean and the covariance matrix in order to find out the result given the hours of study. This is exactly what Gaussian processes do.
+You can't answer this directly without a learning algorithm.
+But what if you were told:
+
+* The data follows a **multivariate normal distribution**, and
+* You're given the **parameters** (mean and covariance) of this distribution.
+
+Then you can:
+
+* Estimate the **likelihood** that the new data point comes from this distribution (through its pdf function),
+* And hence compute the **probability** that it belongs to Class A.
 
 ---
 
-## The Gaussian Process Assumption {#assumption}
+### 📌 Scenario 2: Regression Within a Class
 
-However it is extremely rare that the given data and the corresponding target variable are both individually Gaussian distributed. This is where the assumption of the Gaussian process comes into play.
+Now consider a different question:
+Given that the new student is from **Class A**, can you predict their *result* based on their *hours of study*?
 
-In Gaussian process we instead assume that there exists some unknown function (that we do not need to care about) that on applying which to any subset of the data points X and the corresponding target values y will create a new set of elements $f(x_1), f(x_2),\ldots, f(x_n)$ that are jointly (it means together) multivariate normally distributed and so are $f(y_1), f(y_2), \ldots, f(y_n)$.
+Suppose:
 
-So now the parameters that we have to find or estimate are of the joint conditional distribution (not the ones of individual distributions).
+* Both *hours of study* and *results* are **individually normally distributed**.
 
-The joint conditional distribution is $[f(y_1), f(y_2),\ldots, f(y_n)] \mid [f(x_1), f(x_2),\ldots, f(x_n)]$
+Here’s the **key insight**:
 
-This is not a set of separate distributions like $[f(y_1) \mid f(x_1)], [f(y_2) \mid f(x_2)], \ldots$ etc. Instead, it's a multivariate normal distribution for all the new points together, conditioned on all the observed data.
+> 📎 *If one normal variable is conditioned on another normal variable, the resulting distribution is still a normal distribution.*
+
+This means:
+
+* You can compute the **conditional distribution** of results given hours studied,
+* Which is again a **normal distribution**.
+
+What’s left?
+
+* Just find out the **mean** and **covariance** of this conditional distribution.
+
+🎯 **This is exactly what Gaussian Processes do. So let's now get into Gaussian Process starting with it's assumption**
+
+---
+
+## 📐 The Gaussian Process Assumption <a name="assumption"></a>
+
+In most real-world scenarios, it's **highly unlikely** that both the input data `X` and the corresponding target values `y` are **individually Gaussian distributed**.
+
+This is where the **core assumption of a Gaussian Process (GP)** comes in which is really well thought, powerful and elegant.
+
+---
+
+### 🔍 What Does GP Assume Instead?
+
+Rather than assuming `X` and `y` are individually Gaussian, we assume that:
+
+- There exists some **unknown function** $f$, such that for *any finite subset* of inputs $x_1, x_2, \dots, x_n$, the outputs $f(x_1), f(x_2), \dots, f(x_n)$ are **jointly multivariate normally distributed**.
+
+This implies:
+
+* $f(x_1), f(x_2), \dots, f(x_n)$ follow a **multivariate normal distribution**,
+* And the same holds for $f(y_1), f(y_2), \dots, f(y_n)$.
+
+Importantly, we **don't need to know** the exact form of the function $f$—Gaussian Processes just works on the belief that this function exists and it still surprisingly works.
+
+---
+
+### 📊 What Are We Trying to Estimate?
+
+The key quantity we want to compute is the **conditional distribution**:
+
+$$
+f(y_1), f(y_2), \dots, f(y_n) \mid f(x_1), f(x_2), \dots, f(x_n)
+$$
+
+> 🧠 This is **not** a collection of independent distributions like:
+>
+> $$
+> f(y_1) \mid f(x_1), \quad f(y_2) \mid f(x_2), \quad \dots
+> $$
+
+Instead:
+
+* We work with a **single multivariate normal distribution** over **all the test points together**,
+* Conditioned on **all the observed data**.
+
+This formulation allows Gaussian Processes to:
+
+* Model complex, nonlinear functions (since the unknown imaginary function can be literally any function),
+* Capture **correlations** between outputs (since we are taking into account all the training points at the same time),
+* And make **joint predictions** with associated uncertainty (since the output for new inputs is drawn from a conditional multivariate normal distribution).
 
 ---
 
